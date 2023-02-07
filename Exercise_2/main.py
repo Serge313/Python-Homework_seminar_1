@@ -3,6 +3,8 @@
 если известно, что Петя и Сережа сделали одинаковое количество журавликов,
 а Катя сделала в два раза больше журавликов, чем Петя и Сережа вместе?"""
 
+import sys
+
 
 def each_person_birds(summary):
     """The method counts the number of crane birds made by each person"""
@@ -26,13 +28,23 @@ def testing_each_person_birds(test_summary_of_birds=60):
 
 
 testing_each_person_birds()
-
 print()
 
-number_of_crane_birds = int(input("Enter number of crane birds: "))
+
+class InvalidTicketNumber(Exception):
+    pass
+
+
+try:
+    number_of_crane_birds = int(input("Enter number of crane birds: "))
+    if number_of_crane_birds % 2 != 0 or number_of_crane_birds % 3 != 0:
+        raise InvalidTicketNumber("Invalid value entered!")
+except InvalidTicketNumber as e:
+    print(e)
+    sys.exit()
+except Exception as ex:
+    print(f"Error! {ex}")
+    sys.exit()
+
 birds = each_person_birds(number_of_crane_birds)
-is_even = number_of_crane_birds % 2 == 0 and number_of_crane_birds % 3 == 0
-if is_even:
-    print(f"{number_of_crane_birds} -> {birds}")
-else:
-    print("Invalid value entered!")
+print(f"{number_of_crane_birds} -> {birds}")
